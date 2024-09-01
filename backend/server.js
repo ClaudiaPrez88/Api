@@ -3,6 +3,8 @@ import cors from 'cors';
 import { Pool } from 'pg';
 import dotenv from 'dotenv';
 
+const morgan = require('morgan')
+
 dotenv.config();
 
 const app = express();
