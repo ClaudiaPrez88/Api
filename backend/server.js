@@ -1,5 +1,5 @@
 import express from 'express';
-import cors from 'cors'; // Asegúrate de que este paquete esté instalado
+import cors from 'cors';
 import { Pool } from 'pg';
 import dotenv from 'dotenv';
 
@@ -8,7 +8,7 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3002;
 
-// Configura CORS para permitir solicitudes desde cualquier origen
+
 app.use(cors());
 app.use(express.json());
 
@@ -16,7 +16,7 @@ const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
 
-// Ruta GET para obtener los posts
+
 app.get('/posts', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM posts');
@@ -27,7 +27,7 @@ app.get('/posts', async (req, res) => {
   }
 });
 
-// Ruta POST para agregar un nuevo post
+
 app.post('/posts', async (req, res) => {
   const { titulo, img, descripcion, likes = 0 } = req.body;
   try {
