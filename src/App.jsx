@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Form from "./components/Form";
 import Post from "./components/Post";
 
-const VITE_API_URL = import.meta.env.VITE_API_URL;
+const urlBaseServer = "http://localhost:3002";
 
 
 function App() {
@@ -13,25 +13,25 @@ function App() {
   const [posts, setPosts] = useState([]);
 
   const getPosts = async () => {
-    const { data: posts } = await axios.get(VITE_API_URL + "/posts");
+    const { data: posts } = await axios.get(urlBaseServer + "/posts");
     setPosts([...posts]);
   };
 
   const agregarPost = async () => {
     const post = { titulo, img: imgSrc, descripcion };
-    await axios.post(VITE_API_URL + "/posts", post);
+    await axios.post(urlBaseServer + "/posts", post);
     getPosts();
   };
 
   // este método se utilizará en el siguiente desafío
   const like = async (id) => {
-    await axios.put(VITE_API_URL + `/posts/like/${id}`);
+    await axios.put(urlBaseServer + `/posts/like/${id}`);
     getPosts();
   };
 
   // este método se utilizará en el siguiente desafío
   const eliminarPost = async (id) => {
-    await axios.delete(VITE_API_URL + `/posts/${id}`);
+    await axios.delete(urlBaseServer + `/posts/${id}`);
     getPosts();
   };
 
