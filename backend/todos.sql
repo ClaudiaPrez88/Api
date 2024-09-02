@@ -3,3 +3,5 @@ CREATE TABLE IF NOT EXISTS posts (id SERIAL, titulo VARCHAR(25), img VARCHAR(100
 descripcion VARCHAR(255), likes INT);
 SELECT * FROM posts;
 
+
+
