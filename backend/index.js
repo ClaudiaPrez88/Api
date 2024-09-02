@@ -1,7 +1,7 @@
 // Importaciones
-const express = require('express');
-const cors = require('cors');
-const app = express();
+const express = require('express'); // Importa el framework Express para crear el servidor y manejar rutas
+const cors = require('cors');// Importa el middleware para habilitar CORS, permite que el servidor acepte solicitudes de diferentes dominios
+const app = express();//Crea una instancia de la aplicación Express
 
 // Middleware
 app.use(cors()); // Usa cors después de inicializar app

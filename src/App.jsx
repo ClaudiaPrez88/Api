@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import Form from "./components/Form";
 import Post from "./components/Post";
 
-const urlBaseServer = "http://localhost:3002";
+// Importar la URL base del servidor
+const urlBaseServer = import.meta.env.VITE_URL_BASE_SERVER;
 
 
 function App() {
