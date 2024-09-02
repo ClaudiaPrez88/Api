@@ -81,7 +81,7 @@ app.listen(3002, () => {
 // Función principal para ejecutar las consultas en la terminal
 const main = async () => {
     try {
-        // Agregar un post (opcional, descomenta si deseas agregar uno)
+        // Agregar un post opcional
         // await agregarPosts('Nuevo Título', 'imagen_url', 'Descripción del post', 10);
 
         // Borrar todos los posts
