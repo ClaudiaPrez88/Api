@@ -1,3 +1,5 @@
+//servidor Express que maneja las rutas y las operaciones con los posts
+
 // Importaciones
 const express = require('express'); // Importa el framework Express para crear el servidor y manejar rutas
 const cors = require('cors');// Importa el middleware para habilitar CORS, permite que el servidor acepte solicitudes de diferentes dominios

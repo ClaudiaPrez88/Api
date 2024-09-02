@@ -1,5 +1,4 @@
-/*Con este archivo configuro la base de datos la conexión a la base de datos y defino las funciones para realizar consultas*/
-
+//contiene las funciones que interactúan directamente con la base de datos
 
 const { Pool } = require('pg');
 /*La clase Pool nos permite soportar multiconexiones y un mejor rendimiento en las consultas*/
