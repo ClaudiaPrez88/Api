@@ -16,7 +16,7 @@ router.get('/', function (req, res) {
 router.get('/posts', obtenerPosts);
 router.post('/posts', agregarPosts);
 
-router.patch('/posts/like/:id', async (req, res) => {
+router.put('/posts/like/:id', async (req, res) => {
     const { id } = req.params; // Extrae el id de la solicitud
     try {
         await darLike(id); // Llama a la función darLike con el id

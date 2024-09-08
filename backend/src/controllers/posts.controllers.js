@@ -1,6 +1,4 @@
-//Archivo con funciones asincronas que establecen rutas
-//Las rutas (o handler) definen cómo debe responder el servidor a las solicitudes
-//que coinciden con esa ruta y método HTTP
+//Archivo con funciones asincronas definen como se interactuan con la base de datos
 
 
 //Importo objeto pool con que me conecto con la base
