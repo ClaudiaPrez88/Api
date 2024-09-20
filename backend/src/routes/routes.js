@@ -5,9 +5,6 @@ const reporteMiddleware = require('../middlewares/reporteMiddleware');
 
 router.use(reporteMiddleware);
 
-// router.get('/joyas', obtenerJoyas);
-// // Ruta para obtener todas las joyas con HATEOAS
-// router.get('/joyas/filtros', obtenerJoyasConFiltros);
 
 router.get('/inventario', async (req, res) => {
     const queryStrings = req.query
