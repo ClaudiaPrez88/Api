@@ -14,20 +14,6 @@ const obtenerBase = async () => {
   }
 };
 
-  const obtenerJoyas2 = async ({ limits = 10, page = 1, order_by = "stock_ASC"}) => {
-    const [campo, direccion] = order_by.split("_")
-    const offset = Math.max(0, (page - 1) * limits);
-    const formattedQuery = format('SELECT * FROM inventario order by %s %s LIMIT %s OFFSET %s', campo, direccion, limits,offset);
-    
-    try {
-      const { rows: inventario } = await pool.query(formattedQuery)
-      return inventario
-    } catch (error) {
-      console.error('Error al ejecutar la consulta:', error);
-      throw new Error('Error al obtener joyas de la base de datos');
-    }
-  };
-
 
 
 const obtenerJoyasConFiltros2 = async ({ stock_min, precio_max, precio_min, categoria, metal }) => {
@@ -57,19 +43,64 @@ const obtenerJoyasConFiltros2 = async ({ stock_min, precio_max, precio_min, cate
 };
 
 
-    const prepararHATEOAS = (inventario) => {
-      const results = inventario.map((m) => {
-      return {
-      name: m.nombre,
-      href: `/inventarios/inventario/${m.id}`,
-      }
-      })
-      const total = inventario.length
-      const HATEOAS = {
-      total,
-      results
-      }
-      return HATEOAS
-      }
+const obtenerJoyas2 = async ({ limits = 10, page = 1, order_by = "stock_ASC"}) => {
+  const [campo, direccion] = order_by.split("_")
+  const offset = Math.max(0, (page - 1) * limits);
+  const formattedQuery = format('SELECT * FROM inventario order by %s %s LIMIT %s OFFSET %s', campo, direccion, limits,offset);
+  
+  try {
+    const { rows: inventario } = await pool.query(formattedQuery)
+    return inventario
+  } catch (error) {
+    console.error('Error al ejecutar la consulta:', error);
+    throw new Error('Error al obtener joyas de la base de datos');
+  }
+};
 
-module.exports = { obtenerJoyas2,obtenerJoyasConFiltros2, prepararHATEOAS,obtenerBase };
+const prepararHATEOAS = (inventario, count, limit, pages, currentPage, offset) => {
+  const results = inventario.map((m) => {
+  return {
+  name: m.nombre,
+  href: `/inventarios/inventario/${m.id}`,
+  }
+  })
+  const total = inventario.length
+  const HATEOAS = {
+    total: count,        // Total de registros
+    limit,               // Límite de registros por página
+    pages,               // Número total de páginas
+    currentPage,         // Página actual
+    offset,              // Offset para la paginación
+    results 
+
+  }
+  return HATEOAS
+  }
+
+// Función combinada: obtener joyas y preparar HATEOAS
+const obtenerJoyasConHATEOAS = async ({ limits = 10, page = 1, order_by = "stock_ASC" }) => {
+  const [campo, direccion] = order_by.split("_");
+  const offset = Math.max(0, (page - 1) * limits);
+
+  try {
+    // Consulta para obtener joyas
+    const formattedQuery = format('SELECT * FROM inventario ORDER BY %s %s LIMIT %s OFFSET %s', campo, direccion, limits, offset);
+    const { rows: joyas } = await pool.query(formattedQuery);
+
+    // Consulta para obtener el total de registros
+    const totalJoyasQuery = await pool.query('SELECT COUNT(*) FROM inventario');
+    const count = parseInt(totalJoyasQuery.rows[0].count, 10);
+
+    // Calcular el total de páginas
+    const pages = Math.ceil(count / limits);
+
+    // Preparar la estructura HATEOAS y devolverla
+    return prepararHATEOAS(joyas, count, limits, pages, page, offset);
+
+  } catch (error) {
+    console.error('Error al procesar joyas con HATEOAS:', error);
+    throw new Error('Error al obtener joyas con HATEOAS');
+  }
+};
+
+module.exports = { obtenerJoyas2,obtenerJoyasConFiltros2, prepararHATEOAS,obtenerBase,obtenerJoyasConHATEOAS };
