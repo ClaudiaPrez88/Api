@@ -62,6 +62,9 @@ const prepararHATEOAS = (inventario, count, limit, pages, currentPage, offset) =
   return {
   name: m.nombre,
   href: `/inventarios/inventario/${m.id}`,
+  categoria:m.categoria,
+  precio: m.precio,
+  stock: m.stock
   }
   })
   const total = inventario.length
@@ -81,7 +84,6 @@ const prepararHATEOAS = (inventario, count, limit, pages, currentPage, offset) =
 const obtenerJoyasConHATEOAS = async ({ limits = 10, page = 1, order_by = "stock_ASC" }) => {
   const [campo, direccion] = order_by.split("_");
   const offset = Math.max(0, (page - 1) * limits);
-
   try {
     // Consulta para obtener joyas
     const formattedQuery = format('SELECT * FROM inventario ORDER BY %s %s LIMIT %s OFFSET %s', campo, direccion, limits, offset);
