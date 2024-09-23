@@ -1,16 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { obtenerJoyas2,obtenerJoyasConFiltros2, prepararHATEOAS,obtenerBase,obtenerJoyasConHATEOAS } = require('../controllers/inventario.controllers');
+const {obtenerJoyasConHATEOAS,obtenerJoyasConFiltros } = require('../controllers/inventario.controllers');
 const reporteMiddleware = require('../middlewares/reporteMiddleware');
 
 router.use(reporteMiddleware);
-
-
-router.get('/inventario', async (req, res) => {
-    const queryStrings = req.query
-    const inventario = await obtenerJoyas2(queryStrings)
-    res.json(inventario)
-    })
 
 
 router.get('/joyas', async (req, res) => {
@@ -28,6 +21,15 @@ router.get('/joyas', async (req, res) => {
     }
   });
   
+router.get('/joyas/filtros', async (req, res) => {
+const { precio_max, precio_min, categoria, metal } = req.query;
+try {
+    const joyasFiltradas = await obtenerJoyasConFiltros({ precio_max, precio_min, categoria, metal });
+    res.json(joyasFiltradas);
+} catch (error) {
+    res.status(500).json({ message: 'Error al obtener joyas filtradas', error });
+}
+});
 
 router.get("*", (req, res) => {
     res.status(404).send("Esta ruta no existe")

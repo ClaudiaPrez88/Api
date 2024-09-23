@@ -16,7 +16,7 @@ const obtenerBase = async () => {
 
 
 
-const obtenerJoyasConFiltros2 = async ({ stock_min, precio_max, precio_min, categoria, metal }) => {
+const obtenerJoyasConFiltros = async ({ stock_min, precio_max, precio_min, categoria, metal }) => {
   let filtros = [];
   const values = [];
 
@@ -105,4 +105,4 @@ const obtenerJoyasConHATEOAS = async ({ limits = 10, page = 1, order_by = "stock
   }
 };
 
-module.exports = { obtenerJoyas2,obtenerJoyasConFiltros2, prepararHATEOAS,obtenerBase,obtenerJoyasConHATEOAS };
+module.exports = { obtenerJoyas2,obtenerJoyasConFiltros, prepararHATEOAS,obtenerBase,obtenerJoyasConHATEOAS };

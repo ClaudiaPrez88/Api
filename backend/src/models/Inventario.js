@@ -2,8 +2,6 @@
 const { pool } = require('../db/config');
 //importo la base
 const format = require('pg-format');
-//ayuda a formatear consultas SQL y manejar parámetros de manera segura
-const { handleGenerateHATEOAS } = require('../helpers/helpers');
 
 const Fetch = async (limit = 3, orderBy = 'precio ASC', page = 1, filters = {}) => {
   //Defino función con limite default de 3 resultados, ordenado asi, en la página 1 y un ojbjeto con filtros
