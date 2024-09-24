@@ -3,9 +3,9 @@ const inventario = require('../models/Inventario');
 
 const obtenerJoyas = async (req, res) => {
   try {
-    const { limit = 3, page = 1, order_by = 'precio_ASC' } = req.query;
+    const { limits = 3, page = 1, order_by = 'precio_ASC' } = req.query;
     //destructuración para extraer los valores de limit, page, y order_by de la query string 
-    const response = await inventario.Fetch(limit, order_by, page);
+    const response = await inventario.Fetch(limits, order_by, page);
     // Llamada al modelo para obtener los datos
     res.json(response);
     //envía la respuesta al cliente en formato JSON

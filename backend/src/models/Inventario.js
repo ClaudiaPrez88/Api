@@ -5,13 +5,13 @@ const format = require('pg-format');
 //ayuda a formatear consultas SQL y manejar parámetros de manera segura
 const { handleGenerateHATEOAS } = require('../helpers/helpers');
 
-const Fetch = async (limit = 3, orderBy = 'precio ASC', page = 1, filters = {}) => {
+const Fetch = async (limits = 3, orderBy = 'precio ASC', page = 1, filters = {}) => {
   //Defino función con limite default de 3 resultados, ordenado asi, en la página 1 y un ojbjeto con filtros
   try {
-    limit = Number(limit);
+    limits = Number(limits);
     page = Number(page);
     //convierto ambos en números por seguridad
-    const offset = (page - 1) * limit;
+    const offset = (page - 1) * limits;
     //calculo de offset(resultados se deben omitir para la paginación)
 
     const [field, order] = orderBy.split('_');
@@ -52,7 +52,7 @@ const Fetch = async (limit = 3, orderBy = 'precio ASC', page = 1, filters = {}) 
       SQLrequest += ' WHERE ' + whereClauses.join(' AND ');
     }
     SQLrequest += ` ORDER BY ${field} ${order} LIMIT $${values.length + 1} OFFSET $${values.length + 2}`;
-    values.push(limit, offset);
+    values.push(limits, offset);
     
     const { rows } = await pool.query(SQLrequest, values);
 
@@ -65,8 +65,8 @@ const Fetch = async (limit = 3, orderBy = 'precio ASC', page = 1, filters = {}) 
       rows, //resultados de consulta
       count,//n° total de registros q cumplen con filtros. Sirve para calcular paginacion
       type: 'inventario',//info para saber que datos tengo
-      limit,//número máximo
-      pages: Math.ceil(count / limit),//Math.ceil() redondea hacia arriba para y asegura todos los registros en la paginación
+      limits,//número máximo
+      pages: Math.ceil(count / limits),//Math.ceil() redondea hacia arriba para y asegura todos los registros en la paginación
       currentPage: page,//pagina actual
       offset//El número de registros que se deben omitir para la paginación
     };
